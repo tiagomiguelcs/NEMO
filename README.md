@@ -2,7 +2,7 @@
 
 This Arduino sketch implements an obstacle avoidance robot called NEMO.
 
-<img src="NEMO.jpg" width="20%" height="20%">
+<img src="NEMO.jpg" width="30%" height="30%">
 
 ## Hardware
 - Arduino UNO.
