@@ -6,8 +6,8 @@ if [ -z "$BF" ];  then
   exit 1
 fi
 if [[ "$BF" == "frontend" ]]; then
-    cd $PWD_DIR/nemo-frontend/ && npm start
+    cd $PWD_DIR/frontend/ && npm start
 else
-    cd $PWD_DIR/nemo-backend/nodejs && npm start
+    cd $PWD_DIR/backend/nodejs && npm start
 fi
 
