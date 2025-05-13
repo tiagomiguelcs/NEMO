@@ -1,0 +1,41 @@
+@startuml Room2Me_Architecture
+' title Room2Me
+skinparam componentBackgroundColor White
+skinparam artifactBackgroundColor White
+skinparam queueBackgroundColor White
+skinparam actorBackgroundColor white
+skinparam databaseBackgroundColor white
+
+package "Frontend" as Frontend #F0F0F0 {
+  component "Web App" as Web
+}
+
+package "Backends" as Backend #E6FFE6 {
+  component "Backend de Serviços" as b2 
+  package "Controlador" as Controlo #abeeab{
+    component "Backend de Controlo" as b1
+    component "Ligação Bluetooth" as b3
+  }
+  b2 --> b1
+  b1 --> b3
+}
+
+package "Hardware" as Hardware #FAF0FF {
+  component "Raspberry Pi Zero W Firmware" as F1
+}
+
+b3 --> F1
+Web <--> b2
+note left of b2  
+  Fornecer serviços para 
+  movimentar o robô.
+end note
+note right of b1 
+  Envio de comandos 
+  para o nosso robô.
+end note
+note right of b3 
+  Estabelecer uma ligação 
+  Bluetooth com o robô.
+end note
+@enduml
