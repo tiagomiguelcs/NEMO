@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-    let workshop = process.env.PUBLIC_URL + "/workshop1.png";
+    // let workshop = process.env.PUBLIC_URL + "/workshop1.png";
     let ubi = process.env.PUBLIC_URL + "/ubi.png";
 
     const moveRobot = (direction) =>{
@@ -38,7 +38,6 @@ function App() {
         <button onClick={() => moveRobot("backward")} style={{width:"120px", height:"60px"}}>GO BACKWARD</button>
         </div>
         <div className="logos">
-        <img src={workshop} alt="workshop" />
         <img src={ubi} alt="UBI" />
         </div>
         <span style={{fontSize: "12px", color: "#fff", fontWeight: "bold"}}>
