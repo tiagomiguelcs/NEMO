@@ -1,50 +1,74 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
-    // let workshop = process.env.PUBLIC_URL + "/workshop1.png";
-    let ubi = process.env.PUBLIC_URL + "/ubi.png";
-
-    const moveRobot = (direction) =>{
+    const DEBUG = false;
+    
+    const moveRobot = (obj, direction) =>{
+        console.log(obj);
+        obj.target.className = "button wait";
         const backend = "http://localhost:4000/"+direction;
         fetch(backend, {mode: 'no-cors'}).then(response => {
-            console.log('Fetch done');
+            console.log("# Nemo Robot Controller: ", response);
+            if (obj.target.id === "stop-button")
+                obj.target.className = "button stop"
+            else
+                obj.target.className = "button direction"
         }).catch(error => {
-            console.log('Fetch error:', error);
+            console.log("# (Error) Nemo Robot Controller: ", error);
+            if (!DEBUG){
+                if (obj.target.id === "stop-button")
+                    obj.target.className = "button stop"
+                else
+                    obj.target.className = "button direction"
+            }
         })
     }
 
     return (
-        <div className="App">
-        <header className="App-header">
-        <h2>Nemo Robot Controller</h2>
-        <svg class="robot" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <line x1="100" y1="30" x2="100" y2="50" stroke="#61dafb" stroke-width="4"/>
-        <circle cx="100" cy="25" r="5" fill="#61dafb"/>
-        <rect x="60" y="50" width="80" height="80" rx="10" fill="#61dafb" stroke="#333" stroke-width="2"/>
-        <circle cx="80" cy="80" r="6" fill="#000"/>
-        <circle cx="120" cy="80" r="6" fill="#000"/>
-        <rect x="85" y="100" width="30" height="6" rx="3" fill="#333"/>
-        <rect x="50" y="130" width="100" height="20" rx="10" fill="#444"/>
-        <circle cx="60" cy="140" r="4" fill="#888"/>
-        <circle cx="75" cy="140" r="4" fill="#888"/>
-        <circle cx="90" cy="140" r="4" fill="#888"/>
-        <circle cx="105" cy="140" r="4" fill="#888"/>
-        <circle cx="120" cy="140" r="4" fill="#888"/>
-        <circle cx="135" cy="140" r="4" fill="#888"/>
-        </svg>
-        <div style={{display: "flex", flexDirection: "column", gap: "8px"}}>
-        <button onClick={() => moveRobot("forward")} style={{width:"120px", height:"60px"}}>GO FORWARD</button>
-        <button onClick={() => moveRobot("backward")} style={{width:"120px", height:"60px"}}>GO BACKWARD</button>
+     <div id="shell">
+        <header className="topbar">
+        <div className="brand">
+            <div>
+                <div className="brand-title">NEMO</div>
+                <div className="brand-subtitle">ROBOT CONTROLLER</div>
+            </div>
         </div>
-        <div className="logos">
-        <img src={ubi} alt="UBI" />
+        <div className="status-pill" id="connection-pill" role="status" aria-live="polite">
+            <span className="status-dot"></span>
+            <span id="connection-label">Modo demonstração</span>
         </div>
-        <span style={{fontSize: "12px", color: "#fff", fontWeight: "bold"}}>
-        Universidade da Beira Interior | Departamento de Informática
-        </span>
         </header>
-        </div>
+        <main>
+            <section className="robot-card panel" aria-label="Robô Nemo">
+                <div>
+                    <img src="nemo.png" className="robot-image"/>
+                </div>
+                <h1>Nemo Robot</h1><p className="muted">Controlar o robô em tempo real.</p>
+                <br/>
+                <div className="dpad" aria-label="Controlos direcionais">
+                    <button type="button" className="button direction" data-command="FORWARD" aria-label="Avançar" onClick={(elm) => moveRobot(elm, "forward")}>
+                    ↑
+                    </button>
+                    <button type="button" className="button stop" id="stop-button" aria-label="Parar o robô" onClick={(elm) => moveRobot(elm, "stop")}>
+                    ■
+                    </button>
+                    <button type="button" className="button direction" data-command="BACKWARD" aria-label="Recuar" onClick={(elm) => moveRobot(elm, "backward")}>
+                    ↓
+                    </button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div className="ubi-symbol" aria-label="UBI">
+                <img src="UBI.png"/>
+            </div>
+            <span>
+                Universidade da Beira Interior 
+                <span className="footer-separator">|</span> 
+                Departamento de Informática
+            </span>
+        </footer>
+     </div>
     );
 }
 
